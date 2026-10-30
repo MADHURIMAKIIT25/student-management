@@ -14,3 +14,4 @@ spring.jpa.open-in-view=false
 
 # JWT authentication
 app.jwt.secret=${JWT_SECRET}
+server.port=${PORT:8080}
