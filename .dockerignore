@@ -1,0 +1,9 @@
+target/
+.git/
+.vscode/
+.idea/
+*.zip
+*.log
+.env
+.env.*
+src/main/resources/application-prod.properties
