@@ -1,12 +1,11 @@
-
 package com.student.studentmanagement;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +20,7 @@ public class JwtService {
 
     public JwtService(@Value("${app.jwt.secret}") String secret) {
         this.secretKey = Keys.hmacShaKeyFor(
-                secret.getBytes(StandardCharsets.UTF_8)
+                Decoders.BASE64.decode(secret)
         );
     }
 
