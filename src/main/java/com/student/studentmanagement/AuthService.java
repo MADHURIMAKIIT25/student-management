@@ -1,7 +1,7 @@
 package com.student.studentmanagement;
 
 import com.student.studentmanagement.entity.AppUser;
-import com.student.studentmanagement.AppUserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +20,7 @@ public class AuthService {
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
             JwtService jwtService) {
+
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -28,35 +29,47 @@ public class AuthService {
 
     public String register(String username, String password) {
 
-       if (appUserRepository.existsByUsername(username)) {
-    throw new DuplicateUsernameException("Username already exists");
-}
+        if (appUserRepository.existsByUsername(username)) {
+            throw new DuplicateUsernameException(
+                    "Username already exists"
+            );
+        }
 
         AppUser user = new AppUser(
                 username,
                 passwordEncoder.encode(password)
         );
 
-        appUserRepository.save(user);
+        try {
+            appUserRepository.saveAndFlush(user);
+        } catch (DataIntegrityViolationException ex) {
+    if (appUserRepository.existsByUsername(username)) {
+        throw new DuplicateUsernameException(
+                "Username already exists"
+        );
+    }
+    throw ex;
+}
 
         return "User registered successfully";
     }
 
-   public String login(String username, String password) {
-    try {
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                username,
-                password
-            )
-        );
+    public String login(String username, String password) {
 
-        return jwtService.generateToken(username);
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            username,
+                            password
+                    )
+            );
 
-    } catch (org.springframework.security.core.AuthenticationException ex) {
-        throw new org.springframework.security.authentication.BadCredentialsException(
-            "Invalid username or password"
-        );
+            return jwtService.generateToken(username);
+
+        } catch (org.springframework.security.core.AuthenticationException ex) {
+            throw new org.springframework.security.authentication.BadCredentialsException(
+                    "Invalid username or password"
+            );
+        }
     }
-}
 }
