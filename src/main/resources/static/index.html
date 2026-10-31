@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10172a" />
+  <meta name="description" content="StudentFlow — a secure student management workspace." />
+  <title>StudentFlow · Student Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <main id="loginView" class="login-shell">
+    <section class="login-brand-panel">
+      <div class="brand-lockup brand-lockup-light">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span>student<span class="brand-accent">flow</span></span>
+      </div>
+      <div class="brand-message">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> STUDENT MANAGEMENT WORKSPACE</div>
+        <h1>Every student.<br /><em>One clear view.</em></h1>
+        <p>A simpler way to organise student records, keep information up to date, and stay on top of your campus data.</p>
+      </div>
+      <div class="login-illustration" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="illustration-card card-back"><div class="mini-lines"><i></i><i></i><i></i></div><div class="mini-circle"></div></div>
+        <div class="illustration-card card-front">
+          <div class="mock-card-top"><span class="mock-avatar">SF</span><span class="mock-menu">•••</span></div>
+          <div class="mock-title"></div><div class="mock-subtitle"></div>
+          <div class="mock-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="mock-bottom"><span></span><span></span><span></span></div>
+        </div>
+        <div class="float-chip chip-one"><span class="chip-check">✓</span> Records organised</div>
+        <div class="float-chip chip-two"><span class="chip-pulse"></span> Workspace ready</div>
+      </div>
+      <div class="login-brand-footer"><span>BUILT FOR CLARITY</span><span>SECURE · SIMPLE · CONNECTED</span></div>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="login-form-wrap">
+        <div class="brand-lockup brand-lockup-dark mobile-brand">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>student<span class="brand-accent">flow</span></span>
+        </div>
+        <div class="form-kicker">WELCOME BACK</div>
+        <h2>Sign in to your workspace</h2>
+        <p class="form-intro">Enter your account details to continue.</p>
+
+        <form id="loginForm" class="login-form" autocomplete="on" novalidate>
+          <label for="username">Username</label>
+          <div class="field-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.7-3.4 3.1-5.2 7-5.2s6.3 1.8 7 5.2"></path></svg>
+            <input id="username" name="username" type="text" placeholder="Enter your username" autocomplete="username" required maxlength="50" />
+          </div>
+          <div class="label-row"><label for="password">Password</label></div>
+          <div class="field-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+            <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required maxlength="100" />
+            <button class="password-toggle" type="button" id="togglePassword" aria-label="Show password">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+            </button>
+          </div>
+          <p id="loginError" class="form-error" role="alert" aria-live="polite"></p>
+          <button id="loginButton" class="primary-button login-submit" type="submit"><span>Sign in</span><span class="button-arrow">→</span></button>
+        </form>
+        <div class="secure-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg><span>Your session is protected with secure token-based authentication.</span></div>
+        <div class="login-copyright">© <span id="year"></span> StudentFlow. Student records, made simple.</div>
+      </div>
+    </section>
+  </main>
+
+  <main id="appView" class="app-shell" hidden>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-brand brand-lockup brand-lockup-light">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span>student<span class="brand-accent">flow</span></span>
+      </div>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" id="dashboardNav"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"></rect><rect x="13" y="3" width="8" height="5" rx="2"></rect><rect x="13" y="10" width="8" height="11" rx="2"></rect><rect x="3" y="13" width="8" height="8" rx="2"></rect></svg></span><span>Overview</span></a>
+        <a class="nav-link" href="#students" id="studentsNav"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.8 20c.5-3.3 2.6-5 6.2-5 1.5 0 2.8.3 3.8 1"></path><path d="M16 11a3 3 0 1 0 0-6M15 15c3.6 0 5.5 1.6 6.2 5"></path></svg></span><span>Students</span><span id="sidebarCount" class="nav-count">—</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">✦</div><strong>Stay organised</strong><p>Keep student information accurate and easy to find.</p></div>
+        <div class="sidebar-user"><div class="user-avatar" id="sidebarAvatar">U</div><div class="user-meta"><strong id="sidebarUsername">User</strong><span>Workspace account</span></div><button id="logoutButton" class="logout-button" type="button" title="Sign out" aria-label="Sign out"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg></button></div>
+      </div>
+    </aside>
+
+    <section class="main-panel">
+      <header class="topbar">
+        <button id="menuButton" class="icon-button menu-button" type="button" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
+        <div class="topbar-right"><span class="live-indicator"><i></i> SYSTEM ONLINE</span><div class="topbar-avatar" id="topbarAvatar">U</div></div>
+      </header>
+
+      <div class="content-area">
+        <section class="page-heading">
+          <div><div class="date-line" id="todayDate">YOUR WORKSPACE</div><h1>Good to see you, <span id="greetingName">there</span><span class="wave">✦</span></h1><p>Here’s what’s happening with your student records.</p></div>
+          <button id="addStudentTop" class="primary-button add-top-button" type="button"><span class="plus-symbol">＋</span> Add student</button>
+        </section>
+
+        <section class="stats-grid" aria-label="Student summary">
+          <article class="stat-card stat-primary"><div class="stat-top"><span>Total students</span><span class="stat-icon icon-violet"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"></circle><path d="M2.8 20c.5-3.3 2.6-5 6.2-5s5.7 1.7 6.2 5M16 11a3 3 0 1 0 0-6M16 15c3.2 0 4.9 1.7 5.3 5"></path></svg></span></div><div class="stat-value" id="totalStudents">—</div><div class="stat-foot"><span class="stat-foot-dot"></span> Records in your workspace</div><div class="stat-decoration"></div></article>
+          <article class="stat-card"><div class="stat-top"><span>On this page</span><span class="stat-icon icon-blue"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"></path></svg></span></div><div class="stat-value" id="pageStudents">—</div><div class="stat-foot">Visible student records</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Courses represented</span><span class="stat-icon icon-teal"><svg viewBox="0 0 24 24"><path d="m3 8 9-5 9 5-9 5-9-5Z"></path><path d="M6 10v6c3.7 3.2 8.3 3.2 12 0v-6M21 8v7"></path></svg></span></div><div class="stat-value" id="courseCount">—</div><div class="stat-foot">Courses on this page</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Average age</span><span class="stat-icon icon-amber"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 21c.7-4.1 3.2-6.2 7.5-6.2s6.8 2.1 7.5 6.2"></path></svg></span></div><div class="stat-value" id="averageAge">—</div><div class="stat-foot">Average age on this page</div></article>
+        </section>
+
+        <section class="students-panel" id="studentsSection">
+          <div class="panel-heading"><div><div class="section-kicker">DIRECTORY</div><h2>Student records</h2><p>Search, review and manage your student information.</p></div><button id="addStudentInline" class="secondary-add-button" type="button"><span>＋</span> Add student</button></div>
+          <div class="table-toolbar"><div class="search-box"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg><input id="searchInput" type="search" placeholder="Search by name, email or course…" aria-label="Search students" /><kbd>⌕</kbd></div><div class="toolbar-controls"><label class="sort-control"><span>Sort by</span><select id="sortSelect" aria-label="Sort students"><option value="id:desc">Recently added</option><option value="name:asc">Name A–Z</option><option value="name:desc">Name Z–A</option><option value="course:asc">Course A–Z</option><option value="age:asc">Age: low to high</option><option value="age:desc">Age: high to low</option></select></label><button id="refreshButton" class="icon-button refresh-button" type="button" title="Refresh records" aria-label="Refresh records"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"></path><path d="M5.6 9a7 7 0 0 1 11.8-2L20 12M4 12l2.6 5a7 7 0 0 0 11.8-2"></path></svg></button></div></div>
+          <div class="table-wrap">
+            <table class="students-table">
+              <thead><tr><th class="id-col">ID</th><th>STUDENT</th><th>EMAIL ADDRESS</th><th>COURSE</th><th>AGE</th><th class="actions-col">ACTIONS</th></tr></thead>
+              <tbody id="studentsTableBody"><tr><td colspan="6" class="loading-cell"><span class="spinner"></span> Loading student records…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><div id="tableSummary">Loading records…</div><div class="pagination"><label for="pageSize">Rows</label><select id="pageSize" aria-label="Rows per page"><option value="5" selected>5</option><option value="10">10</option><option value="20">20</option></select><button id="previousPage" class="page-button" type="button" aria-label="Previous page" disabled>‹</button><span id="pageIndicator" class="page-indicator">1 / 1</span><button id="nextPage" class="page-button" type="button" aria-label="Next page" disabled>›</button></div></div>
+        </section>
+        <footer class="app-footer"><span>© <span id="appYear"></span> StudentFlow</span><span>Made for better student management <b>✦</b></span></footer>
+      </div>
+    </section>
+  </main>
+
+  <div id="studentModal" class="modal-backdrop" hidden>
+    <section class="student-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header"><div><div class="section-kicker" id="modalKicker">NEW RECORD</div><h2 id="modalTitle">Add a student</h2><p>Enter the student's details below.</p></div><button id="closeModal" class="modal-close" type="button" aria-label="Close dialog">×</button></div>
+      <form id="studentForm" class="student-form" novalidate>
+        <input id="studentId" type="hidden" />
+        <div class="form-field"><label for="studentName">Full name <span>*</span></label><input id="studentName" type="text" placeholder="e.g. Aditi Sharma" minlength="2" maxlength="100" required /></div>
+        <div class="form-field"><label for="studentEmail">Email address <span>*</span></label><input id="studentEmail" type="email" placeholder="name@example.com" required /></div>
+        <div class="form-field"><label for="studentCourse">Course <span>*</span></label><input id="studentCourse" type="text" placeholder="e.g. Computer Science" required /></div>
+        <div class="form-field"><label for="studentAge">Age <small>Optional</small></label><input id="studentAge" type="number" min="0" step="1" placeholder="e.g. 21" /></div>
+        <p id="studentFormError" class="form-error modal-error" role="alert" aria-live="polite"></p>
+        <div class="modal-actions"><button id="cancelModal" class="cancel-button" type="button">Cancel</button><button id="saveStudentButton" class="primary-button" type="submit">Save student <span>→</span></button></div>
+      </form>
+    </section>
+  </div>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
