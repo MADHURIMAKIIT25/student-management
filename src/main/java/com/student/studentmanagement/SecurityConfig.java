@@ -42,9 +42,19 @@ public class SecurityConfig {
             )
 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-            )
+    .requestMatchers(
+        "/",
+        "/index.html",
+        "/css/**",
+        "/js/**",
+        "/images/**",
+        "/favicon.ico"
+    ).permitAll()
+
+    .requestMatchers("/api/auth/**").permitAll()
+
+    .anyRequest().authenticated()
+)
 
             .exceptionHandling(exception -> exception
                 .authenticationEntryPoint((request, response, authException) ->
