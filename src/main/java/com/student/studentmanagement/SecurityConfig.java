@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
+import org.springframework.http.HttpMethod;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -41,10 +42,40 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
 
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-            )
+ .authorizeHttpRequests(auth -> auth
+
+    // Public frontend resources
+    .requestMatchers(
+        "/",
+        "/index.html",
+        "/css/**",
+        "/js/**",
+        "/images/**",
+        "/favicon.ico"
+    ).permitAll()
+
+    // Public authentication endpoints
+    .requestMatchers("/api/auth/**").permitAll()
+
+    // Students can access their own profile
+    .requestMatchers(
+        HttpMethod.GET,
+        "/api/students/me"
+    ).hasRole("STUDENT")
+
+    .requestMatchers(
+        HttpMethod.PUT,
+        "/api/students/me"
+    ).hasRole("STUDENT")
+
+    // Only administrators can manage all student records
+    .requestMatchers(
+        "/api/students",
+        "/api/students/**"
+    ).hasRole("ADMIN")
+
+    .anyRequest().authenticated()
+)
 
             .exceptionHandling(exception -> exception
                 .authenticationEntryPoint((request, response, authException) ->

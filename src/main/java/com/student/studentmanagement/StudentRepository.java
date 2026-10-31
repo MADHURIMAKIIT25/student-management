@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface StudentRepository
         extends JpaRepository<Student, Long> {
@@ -21,4 +23,10 @@ public interface StudentRepository
             @Param("keyword") String keyword,
             Pageable pageable
     );
+
+    // Find a student's profile using the owner's username
+    Optional<Student> findByOwner_Username(String username);
+
+    // Prevent duplicate student email registrations
+    boolean existsByEmailIgnoreCase(String email);
 }

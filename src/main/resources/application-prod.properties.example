@@ -15,3 +15,6 @@ spring.jpa.open-in-view=false
 # JWT authentication
 app.jwt.secret=${JWT_SECRET}
 server.port=${PORT:8080}
+
+# Disable public registration in production
+app.registration.enabled=false

@@ -1,10 +1,18 @@
 package com.student.studentmanagement;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.student.studentmanagement.entity.AppUser;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -14,72 +22,108 @@ import jakarta.validation.constraints.Size;
 @Table(name = "students")
 public class Student {
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@NotBlank(message = "Name is required")
-@Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
-private String name;
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 100,
+            message = "Name must be between 2 and 100 characters")
+    private String name;
 
-@NotBlank(message = "Email is required")
-@Email(message = "Please enter a valid email address")
-private String email;
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
+    private String email;
 
-@NotBlank(message = "Course is required")
-private String course;
+    @NotBlank(message = "Course is required")
+    private String course;
 
-@PositiveOrZero(message = "Age cannot be negative")
-private Integer age;
+    @PositiveOrZero(message = "Age cannot be negative")
+    private Integer age;
 
-public Student() {
-}
+    @Size(max = 30, message = "Gender must not exceed 30 characters")
+    @Column(length = 30)
+    private String gender;
 
-public Student(String name, String email, String course, Integer age) {
-    this.name = name;
-    this.email = email;
-    this.course = course;
-    this.age = age;
-}
+    // Every registered student profile can belong to a user account.
+    // Existing student records can initially have no owner.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonIgnore
+    private AppUser owner;
 
-public Long getId() {
-    return id;
-}
+    public Student() {
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public Student(String name, String email,
+                   String course, Integer age) {
 
-public String getName() {
-    return name;
-}
+        this.name = name;
+        this.email = email;
+        this.course = course;
+        this.age = age;
+    }
 
-public void setName(String name) {
-    this.name = name;
-}
+    // ID
+    public Long getId() {
+        return id;
+    }
 
-public String getEmail() {
-    return email;
-}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public void setEmail(String email) {
-    this.email = email;
-}
+    // Name
+    public String getName() {
+        return name;
+    }
 
-public String getCourse() {
-    return course;
-}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public void setCourse(String course) {
-    this.course = course;
-}
+    // Email
+    public String getEmail() {
+        return email;
+    }
 
-public Integer getAge() {
-    return age;
-}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-public void setAge(Integer age) {
-    this.age = age;
-}
+    // Course
+    public String getCourse() {
+        return course;
+    }
 
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    // Age
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    // Gender
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    // Account ownership
+    public AppUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(AppUser owner) {
+        this.owner = owner;
+    }
 }

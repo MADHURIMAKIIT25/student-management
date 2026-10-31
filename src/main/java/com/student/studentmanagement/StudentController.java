@@ -1,4 +1,3 @@
-
 package com.student.studentmanagement;
 
 import java.time.LocalDateTime;
@@ -11,13 +10,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import org.springframework.data.web.PagedModel;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +41,7 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
-    // Create a student
+    // ADMIN: Create a student record
     @PostMapping
     public ResponseEntity<Student> createStudent(
             @Valid @RequestBody Student student) {
@@ -52,14 +52,14 @@ public class StudentController {
                 .body(savedStudent);
     }
 
-    // Get all students
+    // ADMIN: Get all student records
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
 
         return ResponseEntity.ok(studentRepository.findAll());
     }
 
-    // Search students with pagination and sorting
+    // ADMIN: Search, sort and paginate student records
     @GetMapping("/search")
     public ResponseEntity<?> searchStudents(
             @RequestParam(defaultValue = "") String keyword,
@@ -103,7 +103,7 @@ public class StudentController {
         return ResponseEntity.ok(new PagedModel<>(students));
     }
 
-    // Get a student by ID
+    // ADMIN: Get a student by ID
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(
             @PathVariable Long id) {
@@ -114,7 +114,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    // Update a student
+    // ADMIN: Update any student record
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(
             @PathVariable Long id,
@@ -123,17 +123,14 @@ public class StudentController {
         Student existingStudent = studentRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException(id));
 
-        existingStudent.setName(updatedStudent.getName());
-        existingStudent.setEmail(updatedStudent.getEmail());
-        existingStudent.setCourse(updatedStudent.getCourse());
-        existingStudent.setAge(updatedStudent.getAge());
+        copyStudentDetails(existingStudent, updatedStudent);
 
         Student savedStudent = studentRepository.save(existingStudent);
 
         return ResponseEntity.ok(savedStudent);
     }
 
-    // Delete a student
+    // ADMIN: Delete any student record
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(
             @PathVariable Long id) {
@@ -146,7 +143,50 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-    // Return a standard JSON error for invalid search parameters
+    // STUDENT: View only their own profile
+    @GetMapping("/me")
+    public ResponseEntity<Student> getMyProfile(
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        return studentRepository.findByOwner_Username(
+                        userDetails.getUsername())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // STUDENT: Update only their own profile
+    @PutMapping("/me")
+    public ResponseEntity<?> updateMyProfile(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody Student updatedStudent) {
+
+        return studentRepository.findByOwner_Username(
+                        userDetails.getUsername())
+                .map(existingStudent -> {
+
+                    copyStudentDetails(existingStudent, updatedStudent);
+
+                    Student savedStudent =
+                            studentRepository.save(existingStudent);
+
+                    return ResponseEntity.ok(savedStudent);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Copy editable student information without changing ownership.
+    private void copyStudentDetails(
+            Student existingStudent,
+            Student updatedStudent) {
+
+        existingStudent.setName(updatedStudent.getName());
+        existingStudent.setEmail(updatedStudent.getEmail());
+        existingStudent.setCourse(updatedStudent.getCourse());
+        existingStudent.setAge(updatedStudent.getAge());
+        existingStudent.setGender(updatedStudent.getGender());
+    }
+
+    // Standard JSON error for invalid search parameters
     private ResponseEntity<Map<String, Object>> badRequest(
             String message,
             HttpServletRequest request) {
