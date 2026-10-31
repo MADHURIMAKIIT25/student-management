@@ -1,5 +1,6 @@
 package com.student.studentmanagement;
 
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -20,9 +21,9 @@ public class JwtService {
 
     public JwtService(@Value("${app.jwt.secret}") String secret) {
         this.secretKey = Keys.hmacShaKeyFor(
-                Decoders.BASE64.decode(secret)
-        );
-    }
+            Decoders.BASE64.decode(secret)
+    );
+}
 
     public String generateToken(String username) {
         Date now = new Date();

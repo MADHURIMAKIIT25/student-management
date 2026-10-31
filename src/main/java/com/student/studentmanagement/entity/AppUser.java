@@ -21,12 +21,22 @@ public class AppUser {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @Column(nullable = false, length = 20)
+    private String role = "STUDENT";
+
     public AppUser() {
     }
 
     public AppUser(String username, String password) {
         this.username = username;
         this.password = password;
+        this.role = "STUDENT";
+    }
+
+    public AppUser(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -47,5 +57,13 @@ public class AppUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

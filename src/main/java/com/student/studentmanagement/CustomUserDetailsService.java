@@ -1,6 +1,7 @@
 package com.student.studentmanagement;
 
 import com.student.studentmanagement.entity.AppUser;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,9 +26,15 @@ public class CustomUserDetailsService implements UserDetailsService {
                         "User not found: " + username
                 ));
 
+        String role = appUser.getRole();
+
+        if (!"ADMIN".equals(role) && !"STUDENT".equals(role)) {
+            throw new IllegalStateException("Invalid user role configured.");
+        }
+
         return User.withUsername(appUser.getUsername())
                 .password(appUser.getPassword())
-                .roles("USER")
+                .roles(role)
                 .build();
     }
 }

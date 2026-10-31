@@ -34,12 +34,10 @@ public class AuthController {
                     .body("Public registration is disabled.");
         }
 
-        String result = authService.register(
-                request.getUsername(),
-                request.getPassword()
-        );
+        String result = authService.register(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(result);
     }
 
     @PostMapping("/login")
@@ -54,7 +52,5 @@ public class AuthController {
         return ResponseEntity.ok(token);
     }
 }
-
-
 
 

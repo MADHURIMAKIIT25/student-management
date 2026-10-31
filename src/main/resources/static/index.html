@@ -65,8 +65,58 @@
           <p id="loginError" class="form-error" role="alert" aria-live="polite"></p>
           <button id="loginButton" class="primary-button login-submit" type="submit"><span>Sign in</span><span class="button-arrow">→</span></button>
         </form>
+        <p id="loginNotice" class="form-success" role="status" aria-live="polite"></p>
+        <div class="auth-switch">New to StudentFlow? <button id="showRegister" type="button" class="text-button">Create an account</button></div>
         <div class="secure-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg><span>Your session is protected with secure token-based authentication.</span></div>
         <div class="login-copyright">© <span id="year"></span> StudentFlow. Student records, made simple.</div>
+      </div>
+    </section>
+  </main>
+
+
+  <main id="registerView" class="login-shell" hidden>
+    <section class="login-brand-panel">
+      <div class="brand-lockup brand-lockup-light">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span>student<span class="brand-accent">flow</span></span>
+      </div>
+      <div class="brand-message">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR STUDENT WORKSPACE</div>
+        <h1>Your journey.<br /><em>Your own space.</em></h1>
+        <p>Create your account to manage your academic profile and keep your student information up to date.</p>
+      </div>
+      <div class="login-illustration" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="illustration-card card-front"><div class="mock-card-top"><span class="mock-avatar">SF</span><span class="mock-menu">•••</span></div><div class="mock-title"></div><div class="mock-subtitle"></div><div class="mock-chart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="mock-bottom"><span></span><span></span><span></span></div></div>
+        <div class="float-chip chip-one"><span class="chip-check">✓</span> Profile connected</div>
+        <div class="float-chip chip-two"><span class="chip-pulse"></span> Student access</div>
+      </div>
+      <div class="login-brand-footer"><span>BUILT FOR CLARITY</span><span>SECURE · SIMPLE · CONNECTED</span></div>
+    </section>
+    <section class="login-form-panel register-panel">
+      <div class="login-form-wrap register-form-wrap">
+        <div class="brand-lockup brand-lockup-dark mobile-brand">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>student<span class="brand-accent">flow</span></span>
+        </div>
+        <div class="form-kicker">GET STARTED</div>
+        <h2>Create your student account</h2>
+        <p class="form-intro">Your account is private. Registration creates a student profile automatically.</p>
+        <form id="registerForm" class="register-form" novalidate>
+          <div class="form-field"><label for="regUsername">Username <span>*</span></label><input id="regUsername" type="text" minlength="3" maxlength="50" autocomplete="username" placeholder="Choose a username" required /></div>
+          <div class="form-field"><label for="regName">Full name <span>*</span></label><input id="regName" type="text" minlength="2" maxlength="100" autocomplete="name" placeholder="Your full name" required /></div>
+          <div class="form-field"><label for="regEmail">Email address <span>*</span></label><input id="regEmail" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com" required /></div>
+          <div class="form-field"><label for="regCourse">Course <span>*</span></label><input id="regCourse" type="text" maxlength="100" placeholder="e.g. Computer Science" required /></div>
+          <div class="form-field"><label for="regPassword">Password <span>*</span></label><input id="regPassword" type="password" minlength="8" maxlength="100" autocomplete="new-password" placeholder="At least 8 characters" required /></div>
+          <div class="form-field"><label for="regConfirmPassword">Confirm password <span>*</span></label><input id="regConfirmPassword" type="password" minlength="8" maxlength="100" autocomplete="new-password" placeholder="Re-enter your password" required /></div>
+          <div class="form-field"><label for="regGender">Gender <small>Optional</small></label><select id="regGender"><option value="">Prefer not to disclose</option><option value="Female">Female</option><option value="Male">Male</option><option value="Non-binary">Non-binary</option><option value="custom">Prefer to self-describe</option></select></div>
+          <div class="form-field" id="regGenderCustomWrap" hidden><label for="regGenderCustom">Your description <small>Optional</small></label><input id="regGenderCustom" type="text" maxlength="30" placeholder="Enter up to 30 characters" /></div>
+          <div class="form-field"><label for="regAge">Age <small>Optional</small></label><input id="regAge" type="number" min="0" max="130" step="1" placeholder="Age" /></div>
+          <p id="registerError" class="form-error register-error" role="alert" aria-live="polite"></p>
+          <button id="registerButton" class="primary-button register-submit" type="submit">Create account <span class="button-arrow">→</span></button>
+        </form>
+        <div class="auth-switch">Already have an account? <button id="showLogin" type="button" class="text-button">Sign in</button></div>
+        <div class="secure-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z"></path><path d="m9 12 2 2 4-4"></path></svg><span>New public accounts receive student access. Administrator access is assigned separately.</span></div>
       </div>
     </section>
   </main>
@@ -120,6 +170,51 @@
           <div class="table-footer"><div id="tableSummary">Loading records…</div><div class="pagination"><label for="pageSize">Rows</label><select id="pageSize" aria-label="Rows per page"><option value="5" selected>5</option><option value="10">10</option><option value="20">20</option></select><button id="previousPage" class="page-button" type="button" aria-label="Previous page" disabled>‹</button><span id="pageIndicator" class="page-indicator">1 / 1</span><button id="nextPage" class="page-button" type="button" aria-label="Next page" disabled>›</button></div></div>
         </section>
         <footer class="app-footer"><span>© <span id="appYear"></span> StudentFlow</span><span>Made for better student management <b>✦</b></span></footer>
+      </div>
+    </section>
+  </main>
+
+
+  <main id="studentView" class="app-shell" hidden>
+    <aside class="sidebar">
+      <div class="sidebar-brand brand-lockup brand-lockup-light">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        <span>student<span class="brand-accent">flow</span></span>
+      </div>
+      <div class="workspace-label">STUDENT WORKSPACE</div>
+      <nav class="side-nav" aria-label="Student navigation">
+        <a class="nav-link active" href="#myProfile"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 21c.7-4.1 3.2-6.2 7.5-6.2s6.8 2.1 7.5 6.2"></path></svg></span><span>My profile</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">✦</div><strong>Your profile, your space</strong><p>Keep your academic information accurate and up to date.</p></div>
+        <div class="sidebar-user"><div class="user-avatar" id="studentSidebarAvatar">S</div><div class="user-meta"><strong id="studentSidebarUsername">Student</strong><span>Student account</span></div><button id="studentLogoutButton" class="logout-button" type="button" title="Sign out" aria-label="Sign out"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"></path><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"></path></svg></button></div>
+      </div>
+    </aside>
+    <section class="main-panel">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Student workspace</span><b>/</b><strong>My profile</strong></div>
+        <div class="topbar-right"><span class="live-indicator"><i></i> SECURE SESSION</span><div class="topbar-avatar" id="studentTopbarAvatar">S</div></div>
+      </header>
+      <div class="content-area student-content">
+        <section class="page-heading">
+          <div><div class="date-line" id="studentTodayDate">YOUR WORKSPACE</div><h1>Welcome, <span id="studentGreetingName">there</span><span class="wave">✦</span></h1><p>View and update the academic information linked to your account.</p></div>
+        </section>
+        <section class="student-profile-card" id="myProfile">
+          <div class="profile-card-heading"><div><div class="section-kicker">PERSONAL DETAILS</div><h2>My student profile</h2><p>Only you can view and edit this profile.</p></div><span class="role-chip">STUDENT</span></div>
+          <div id="profileLoading" class="profile-message"><span class="spinner"></span> Loading your profile…</div>
+          <form id="myProfileForm" class="profile-form" hidden novalidate>
+            <div class="form-field"><label for="myName">Full name <span>*</span></label><input id="myName" type="text" minlength="2" maxlength="100" required /></div>
+            <div class="form-field"><label for="myEmail">Email address <span>*</span></label><input id="myEmail" type="email" maxlength="254" required /></div>
+            <div class="form-field"><label for="myCourse">Course <span>*</span></label><input id="myCourse" type="text" maxlength="100" required /></div>
+            <div class="form-field"><label for="myAge">Age <small>Optional</small></label><input id="myAge" type="number" min="0" max="130" step="1" /></div>
+            <div class="form-field"><label for="myGender">Gender <small>Optional</small></label><select id="myGender"><option value="">Prefer not to disclose</option><option value="Female">Female</option><option value="Male">Male</option><option value="Non-binary">Non-binary</option><option value="custom">Prefer to self-describe</option></select></div>
+            <div class="form-field" id="myGenderCustomWrap" hidden><label for="myGenderCustom">Your description <small>Optional</small></label><input id="myGenderCustom" type="text" maxlength="30" placeholder="Enter up to 30 characters" /></div>
+            <p id="myProfileError" class="form-error profile-error" role="alert" aria-live="polite"></p>
+            <div class="profile-actions"><button id="saveMyProfile" class="primary-button" type="submit">Save profile <span>→</span></button></div>
+          </form>
+          <div id="profileUnavailable" class="profile-message" hidden></div>
+        </section>
+        <footer class="app-footer"><span>© <span id="studentAppYear"></span> StudentFlow</span><span>Your information stays connected to your account <b>✦</b></span></footer>
       </div>
     </section>
   </main>

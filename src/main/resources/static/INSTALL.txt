@@ -1,0 +1,16 @@
+StudentFlow role-based frontend update
+
+Replace the three files in your Spring Boot project:
+src/main/resources/static/index.html
+src/main/resources/static/css/style.css
+src/main/resources/static/js/app.js
+
+Keep the same folder structure. This update adds public student registration, role-aware login routing (ADMIN / STUDENT), and a student-only own-profile screen.
+
+The backend must also contain and compile these matching endpoints:
+GET /api/account/me
+GET /api/students/me
+PUT /api/students/me
+POST /api/auth/register accepting username, password, confirmPassword, name, email, course, optional gender and optional age.
+
+Do not deploy public registration until the backend authorization and production database migration have been verified.
